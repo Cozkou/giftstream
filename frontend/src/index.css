@@ -1,0 +1,974 @@
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+    :root {
+        --radius: 0.625rem;
+        
+        /* Christmas color palette - Light mode */
+        --background: 0.98 0.02 25;
+        --foreground: 0.145 0 0;
+        --card: 1 0 0;
+        --card-foreground: 0.145 0 0;
+        --popover: 1 0 0;
+        --popover-foreground: 0.145 0 0;
+        --primary: 0.45 0.18 25;
+        --primary-foreground: 0.985 0 0;
+        --secondary: 0.35 0.15 145;
+        --secondary-foreground: 0.985 0 0;
+        --muted: 0.97 0 0;
+        --muted-foreground: 0.556 0 0;
+        --accent: 0.65 0.15 65;
+        --accent-foreground: 0.145 0 0;
+        --destructive: 0.577 0.245 27.325;
+        --destructive-foreground: 0.985 0 0;
+        --border: 0.922 0 0;
+        --input: 0.922 0 0;
+        --ring: 0.708 0 0;
+        
+        /* Christmas-specific colors */
+        --christmas-red: 0.45 0.22 25;
+        --christmas-green: 0.42 0.18 145;
+        --christmas-gold: 0.75 0.15 65;
+        --christmas-dark: 0.25 0.08 25;
+        --christmas-light: 0.92 0.03 25;
+        
+        /* Item rarity colors */
+        --rarity-common: 0.60 0.15 145;
+        --rarity-rare: 0.65 0.18 240;
+        --rarity-epic: 0.60 0.20 300;
+        --rarity-legendary: 0.75 0.18 55;
+        
+        --chart-1: 0.646 0.222 41.116;
+        --chart-2: 0.6 0.118 184.704;
+        --chart-3: 0.398 0.07 227.392;
+        --chart-4: 0.828 0.189 84.429;
+        --chart-5: 0.769 0.188 70.08;
+        --sidebar: 0.985 0 0;
+        --sidebar-foreground: 0.145 0 0;
+        --sidebar-primary: 0.205 0 0;
+        --sidebar-primary-foreground: 0.985 0 0;
+        --sidebar-accent: 0.97 0 0;
+        --sidebar-accent-foreground: 0.205 0 0;
+        --sidebar-border: 0.922 0 0;
+        --sidebar-ring: 0.708 0 0;
+    }
+
+    .dark {
+        --background: 0.145 0 0;
+        --foreground: 0.985 0 0;
+        --card: 0.205 0 0;
+        --card-foreground: 0.985 0 0;
+        --popover: 0.269 0 0;
+        --popover-foreground: 0.985 0 0;
+        --primary: 0.55 0.20 25;
+        --primary-foreground: 0.985 0 0;
+        --secondary: 0.40 0.16 145;
+        --secondary-foreground: 0.985 0 0;
+        --muted: 0.269 0 0;
+        --muted-foreground: 0.708 0 0;
+        --accent: 0.70 0.16 65;
+        --accent-foreground: 0.985 0 0;
+        --destructive: 0.704 0.191 22.216;
+        --destructive-foreground: 0.205 0 0;
+        --border: 1 0 0 / 10%;
+        --input: 1 0 0 / 15%;
+        --ring: 0.556 0 0;
+        
+        /* Christmas-specific colors - Dark mode */
+        --christmas-red: 0.50 0.24 25;
+        --christmas-green: 0.45 0.19 145;
+        --christmas-gold: 0.78 0.16 65;
+        --christmas-dark: 0.18 0.05 25;
+        --christmas-light: 0.88 0.04 25;
+        
+        /* Item rarity colors - Dark mode */
+        --rarity-common: 0.65 0.16 145;
+        --rarity-rare: 0.70 0.19 240;
+        --rarity-epic: 0.65 0.21 300;
+        --rarity-legendary: 0.80 0.19 55;
+        
+        --chart-1: 0.488 0.243 264.376;
+        --chart-2: 0.696 0.17 162.48;
+        --chart-3: 0.769 0.188 70.08;
+        --chart-4: 0.627 0.265 303.9;
+        --chart-5: 0.645 0.246 16.439;
+        --sidebar: 0.205 0 0;
+        --sidebar-foreground: 0.985 0 0;
+        --sidebar-primary: 0.488 0.243 264.376;
+        --sidebar-primary-foreground: 0.985 0 0;
+        --sidebar-accent: 0.269 0 0;
+        --sidebar-accent-foreground: 0.985 0 0;
+        --sidebar-border: 1 0 0 / 10%;
+        --sidebar-ring: 0.439 0 0;
+    }
+
+    * {
+        @apply border-border;
+    }
+    
+    body {
+        @apply bg-background text-foreground;
+        font-family: 'Press Start 2P', cursive, system-ui, -apple-system, sans-serif;
+        line-height: 1.6;
+    }
+    
+    /* Christmas background with image - no overlay */
+    .bg-christmas-background {
+        background-image: url('/assets/generated/christmas-background.dim_1920x1080.jpg');
+        background-size: cover;
+        background-position: center;
+        background-attachment: fixed;
+        position: relative;
+    }
+    
+    .bg-christmas-background > * {
+        position: relative;
+        z-index: 1;
+    }
+
+    /* Snowy Christmas background - uses custom image from /public/background.jpeg */
+    .bg-snowy-christmas {
+        position: relative;
+        /* Custom background image */
+        background-image: url('/background.jpeg');
+        background-size: cover;
+        background-position: center;
+        background-attachment: fixed;
+        /* Fallback gradient if no image */
+        background-color: #1a1a2e;
+        overflow: hidden;
+    }
+
+    /* Dark overlay for better readability */
+    .bg-snowy-christmas::before {
+        content: '';
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: 
+            /* Dark overlay */
+            linear-gradient(180deg, rgba(0, 0, 0, 0.3) 0%, rgba(0, 0, 0, 0.5) 100%),
+            /* Warm orange glow from top */
+            radial-gradient(ellipse 120% 60% at 50% -20%, rgba(255, 140, 50, 0.2) 0%, transparent 70%),
+            /* Snow ground glow */
+            radial-gradient(ellipse 150% 40% at 50% 110%, rgba(255, 255, 255, 0.15) 0%, transparent 60%);
+        pointer-events: none;
+        z-index: 0;
+    }
+
+    /* Falling snow animation - dense particles */
+    .bg-snowy-christmas::after {
+        content: '';
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-image: 
+            url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 800'%3E%3Ccircle fill='%23fff' fill-opacity='0.8' cx='40' cy='30' r='2.5'/%3E%3Ccircle fill='%23fff' fill-opacity='0.6' cx='120' cy='80' r='2'/%3E%3Ccircle fill='%23fff' fill-opacity='0.7' cx='200' cy='50' r='3'/%3E%3Ccircle fill='%23fff' fill-opacity='0.5' cx='280' cy='120' r='1.5'/%3E%3Ccircle fill='%23fff' fill-opacity='0.8' cx='360' cy='70' r='2'/%3E%3Ccircle fill='%23fff' fill-opacity='0.6' cx='440' cy='40' r='2.5'/%3E%3Ccircle fill='%23fff' fill-opacity='0.7' cx='520' cy='100' r='2'/%3E%3Ccircle fill='%23fff' fill-opacity='0.5' cx='600' cy='60' r='3'/%3E%3Ccircle fill='%23fff' fill-opacity='0.8' cx='680' cy='90' r='1.5'/%3E%3Ccircle fill='%23fff' fill-opacity='0.6' cx='760' cy='45' r='2'/%3E%3Ccircle fill='%23fff' fill-opacity='0.7' cx='80' cy='160' r='2'/%3E%3Ccircle fill='%23fff' fill-opacity='0.5' cx='160' cy='200' r='2.5'/%3E%3Ccircle fill='%23fff' fill-opacity='0.8' cx='240' cy='180' r='1.5'/%3E%3Ccircle fill='%23fff' fill-opacity='0.6' cx='320' cy='220' r='3'/%3E%3Ccircle fill='%23fff' fill-opacity='0.7' cx='400' cy='170' r='2'/%3E%3Ccircle fill='%23fff' fill-opacity='0.5' cx='480' cy='240' r='2'/%3E%3Ccircle fill='%23fff' fill-opacity='0.8' cx='560' cy='190' r='2.5'/%3E%3Ccircle fill='%23fff' fill-opacity='0.6' cx='640' cy='230' r='1.5'/%3E%3Ccircle fill='%23fff' fill-opacity='0.7' cx='720' cy='175' r='2'/%3E%3Ccircle fill='%23fff' fill-opacity='0.5' cx='60' cy='280' r='3'/%3E%3Ccircle fill='%23fff' fill-opacity='0.8' cx='140' cy='320' r='2'/%3E%3Ccircle fill='%23fff' fill-opacity='0.6' cx='220' cy='290' r='2'/%3E%3Ccircle fill='%23fff' fill-opacity='0.7' cx='300' cy='350' r='2.5'/%3E%3Ccircle fill='%23fff' fill-opacity='0.5' cx='380' cy='300' r='1.5'/%3E%3Ccircle fill='%23fff' fill-opacity='0.8' cx='460' cy='340' r='2'/%3E%3Ccircle fill='%23fff' fill-opacity='0.6' cx='540' cy='310' r='3'/%3E%3Ccircle fill='%23fff' fill-opacity='0.7' cx='620' cy='360' r='2'/%3E%3Ccircle fill='%23fff' fill-opacity='0.5' cx='700' cy='295' r='2.5'/%3E%3Ccircle fill='%23fff' fill-opacity='0.8' cx='780' cy='330' r='1.5'/%3E%3Ccircle fill='%23fff' fill-opacity='0.6' cx='100' cy='400' r='2'/%3E%3Ccircle fill='%23fff' fill-opacity='0.7' cx='180' cy='440' r='2.5'/%3E%3Ccircle fill='%23fff' fill-opacity='0.5' cx='260' cy='420' r='2'/%3E%3Ccircle fill='%23fff' fill-opacity='0.8' cx='340' cy='470' r='3'/%3E%3Ccircle fill='%23fff' fill-opacity='0.6' cx='420' cy='410' r='1.5'/%3E%3Ccircle fill='%23fff' fill-opacity='0.7' cx='500' cy='450' r='2'/%3E%3Ccircle fill='%23fff' fill-opacity='0.5' cx='580' cy='430' r='2.5'/%3E%3Ccircle fill='%23fff' fill-opacity='0.8' cx='660' cy='480' r='2'/%3E%3Ccircle fill='%23fff' fill-opacity='0.6' cx='740' cy='415' r='2'/%3E%3Ccircle fill='%23fff' fill-opacity='0.7' cx='50' cy='520' r='3'/%3E%3Ccircle fill='%23fff' fill-opacity='0.5' cx='130' cy='560' r='1.5'/%3E%3Ccircle fill='%23fff' fill-opacity='0.8' cx='210' cy='540' r='2'/%3E%3Ccircle fill='%23fff' fill-opacity='0.6' cx='290' cy='590' r='2.5'/%3E%3Ccircle fill='%23fff' fill-opacity='0.7' cx='370' cy='530' r='2'/%3E%3Ccircle fill='%23fff' fill-opacity='0.5' cx='450' cy='570' r='3'/%3E%3Ccircle fill='%23fff' fill-opacity='0.8' cx='530' cy='550' r='1.5'/%3E%3Ccircle fill='%23fff' fill-opacity='0.6' cx='610' cy='600' r='2'/%3E%3Ccircle fill='%23fff' fill-opacity='0.7' cx='690' cy='535' r='2.5'/%3E%3Ccircle fill='%23fff' fill-opacity='0.5' cx='770' cy='580' r='2'/%3E%3Ccircle fill='%23fff' fill-opacity='0.8' cx='90' cy='640' r='2'/%3E%3Ccircle fill='%23fff' fill-opacity='0.6' cx='170' cy='680' r='2.5'/%3E%3Ccircle fill='%23fff' fill-opacity='0.7' cx='250' cy='660' r='3'/%3E%3Ccircle fill='%23fff' fill-opacity='0.5' cx='330' cy='710' r='1.5'/%3E%3Ccircle fill='%23fff' fill-opacity='0.8' cx='410' cy='650' r='2'/%3E%3Ccircle fill='%23fff' fill-opacity='0.6' cx='490' cy='690' r='2'/%3E%3Ccircle fill='%23fff' fill-opacity='0.7' cx='570' cy='670' r='2.5'/%3E%3Ccircle fill='%23fff' fill-opacity='0.5' cx='650' cy='720' r='2'/%3E%3Ccircle fill='%23fff' fill-opacity='0.8' cx='730' cy='655' r='3'/%3E%3Ccircle fill='%23fff' fill-opacity='0.6' cx='70' cy='760' r='1.5'/%3E%3Ccircle fill='%23fff' fill-opacity='0.7' cx='150' cy='790' r='2'/%3E%3Ccircle fill='%23fff' fill-opacity='0.5' cx='230' cy='770' r='2.5'/%3E%3Ccircle fill='%23fff' fill-opacity='0.8' cx='310' cy='780' r='2'/%3E%3Ccircle fill='%23fff' fill-opacity='0.6' cx='390' cy='750' r='3'/%3E%3Ccircle fill='%23fff' fill-opacity='0.7' cx='470' cy='795' r='1.5'/%3E%3Ccircle fill='%23fff' fill-opacity='0.5' cx='550' cy='765' r='2'/%3E%3Ccircle fill='%23fff' fill-opacity='0.8' cx='630' cy='785' r='2.5'/%3E%3Ccircle fill='%23fff' fill-opacity='0.6' cx='710' cy='755' r='2'/%3E%3Ccircle fill='%23fff' fill-opacity='0.7' cx='790' cy='775' r='2'/%3E%3C/svg%3E");
+        background-size: 800px 800px;
+        animation: snowfall 18s linear infinite;
+        pointer-events: none;
+        z-index: 1;
+        opacity: 0.85;
+    }
+
+    @keyframes snowfall {
+        0% {
+            background-position: 0 0, 200px 0;
+        }
+        100% {
+            background-position: 0 1024px, 200px 1024px;
+        }
+    }
+
+    .bg-snowy-christmas > * {
+        position: relative;
+        z-index: 2;
+    }
+}
+
+@layer components {
+    /* Mystery Box - 3D Gift Box Styles */
+    .mystery-box {
+        @apply relative;
+        width: 80px;
+        height: 80px;
+        transform-style: preserve-3d;
+        transition: all 0.3s ease;
+    }
+    
+    .mystery-box-body {
+        @apply absolute inset-0 rounded-lg;
+        background: linear-gradient(135deg, 
+            oklch(var(--rarity-common) / 0.9) 0%, 
+            oklch(var(--rarity-common) / 0.7) 100%);
+        box-shadow: 
+            inset -4px -4px 8px rgba(0, 0, 0, 0.3),
+            inset 4px 4px 8px rgba(255, 255, 255, 0.3),
+            0 8px 16px rgba(0, 0, 0, 0.4);
+        border: 2px solid rgba(255, 255, 255, 0.3);
+    }
+    
+    .mystery-box-pattern {
+        @apply absolute inset-0 rounded-lg;
+        background-image: 
+            repeating-linear-gradient(45deg, transparent, transparent 10px, rgba(255, 255, 255, 0.1) 10px, rgba(255, 255, 255, 0.1) 20px),
+            repeating-linear-gradient(-45deg, transparent, transparent 10px, rgba(0, 0, 0, 0.05) 10px, rgba(0, 0, 0, 0.05) 20px);
+    }
+    
+    .mystery-box-ribbon-v {
+        @apply absolute left-1/2 top-0 bottom-0;
+        width: 16px;
+        transform: translateX(-50%);
+        background: linear-gradient(90deg, 
+            oklch(var(--christmas-red) / 0.8) 0%, 
+            oklch(var(--christmas-red)) 50%, 
+            oklch(var(--christmas-red) / 0.8) 100%);
+        box-shadow: 
+            inset -2px 0 4px rgba(0, 0, 0, 0.3),
+            inset 2px 0 4px rgba(255, 255, 255, 0.2);
+        z-index: 2;
+    }
+    
+    .mystery-box-ribbon-h {
+        @apply absolute top-1/2 left-0 right-0;
+        height: 16px;
+        transform: translateY(-50%);
+        background: linear-gradient(180deg, 
+            oklch(var(--christmas-red) / 0.8) 0%, 
+            oklch(var(--christmas-red)) 50%, 
+            oklch(var(--christmas-red) / 0.8) 100%);
+        box-shadow: 
+            inset 0 -2px 4px rgba(0, 0, 0, 0.3),
+            inset 0 2px 4px rgba(255, 255, 255, 0.2);
+        z-index: 2;
+    }
+    
+    .mystery-box-bow {
+        @apply absolute left-1/2 top-0;
+        transform: translate(-50%, -50%);
+        width: 40px;
+        height: 24px;
+        z-index: 3;
+    }
+    
+    .mystery-box-bow-left,
+    .mystery-box-bow-right {
+        @apply absolute top-0;
+        width: 20px;
+        height: 20px;
+        background: oklch(var(--christmas-red));
+        border-radius: 50% 50% 0 50%;
+        box-shadow: 
+            inset -2px -2px 4px rgba(0, 0, 0, 0.3),
+            inset 2px 2px 4px rgba(255, 255, 255, 0.2),
+            0 2px 4px rgba(0, 0, 0, 0.3);
+    }
+    
+    .mystery-box-bow-left {
+        left: 0;
+        transform: rotate(-45deg);
+    }
+    
+    .mystery-box-bow-right {
+        right: 0;
+        transform: rotate(45deg);
+    }
+    
+    .mystery-box-bow-center {
+        @apply absolute left-1/2 top-1/2;
+        transform: translate(-50%, -50%);
+        width: 12px;
+        height: 12px;
+        background: oklch(var(--christmas-red));
+        border-radius: 50%;
+        box-shadow: 
+            inset -2px -2px 3px rgba(0, 0, 0, 0.4),
+            inset 2px 2px 3px rgba(255, 255, 255, 0.3),
+            0 2px 4px rgba(0, 0, 0, 0.3);
+    }
+    
+    /* Rarity-specific mystery box colors */
+    .mystery-box-common .mystery-box-body {
+        background: linear-gradient(135deg, 
+            oklch(var(--rarity-common) / 0.9) 0%, 
+            oklch(var(--rarity-common) / 0.7) 100%);
+        box-shadow: 
+            inset -4px -4px 8px rgba(0, 0, 0, 0.3),
+            inset 4px 4px 8px rgba(255, 255, 255, 0.3),
+            0 8px 16px oklch(var(--rarity-common) / 0.5);
+    }
+    
+    .mystery-box-rare .mystery-box-body {
+        background: linear-gradient(135deg, 
+            oklch(var(--rarity-rare) / 0.9) 0%, 
+            oklch(var(--rarity-rare) / 0.7) 100%);
+        box-shadow: 
+            inset -4px -4px 8px rgba(0, 0, 0, 0.3),
+            inset 4px 4px 8px rgba(255, 255, 255, 0.3),
+            0 8px 16px oklch(var(--rarity-rare) / 0.5);
+    }
+    
+    .mystery-box-epic .mystery-box-body {
+        background: linear-gradient(135deg, 
+            oklch(var(--rarity-epic) / 0.9) 0%, 
+            oklch(var(--rarity-epic) / 0.7) 100%);
+        box-shadow: 
+            inset -4px -4px 8px rgba(0, 0, 0, 0.3),
+            inset 4px 4px 8px rgba(255, 255, 255, 0.3),
+            0 8px 16px oklch(var(--rarity-epic) / 0.5);
+    }
+    
+    .mystery-box-legendary .mystery-box-body {
+        background: linear-gradient(135deg, 
+            oklch(var(--rarity-legendary) / 0.9) 0%, 
+            oklch(var(--rarity-legendary) / 0.7) 100%);
+        box-shadow: 
+            inset -4px -4px 8px rgba(0, 0, 0, 0.3),
+            inset 4px 4px 8px rgba(255, 255, 255, 0.3),
+            0 8px 20px oklch(var(--rarity-legendary) / 0.6),
+            0 0 40px oklch(var(--rarity-legendary) / 0.4);
+    }
+    
+    /* Mystery Box Preview in Modal - Larger version */
+    .mystery-box-preview {
+        @apply relative mx-auto;
+        width: 160px;
+        height: 160px;
+        transform-style: preserve-3d;
+    }
+    
+    .mystery-box-preview-body {
+        @apply absolute inset-0 rounded-2xl;
+        background: linear-gradient(135deg, 
+            oklch(var(--rarity-common) / 0.9) 0%, 
+            oklch(var(--rarity-common) / 0.7) 100%);
+        box-shadow: 
+            inset -8px -8px 16px rgba(0, 0, 0, 0.3),
+            inset 8px 8px 16px rgba(255, 255, 255, 0.3),
+            0 16px 32px rgba(0, 0, 0, 0.4);
+        border: 3px solid rgba(255, 255, 255, 0.3);
+    }
+    
+    .mystery-box-preview-pattern {
+        @apply absolute inset-0 rounded-2xl;
+        background-image: 
+            repeating-linear-gradient(45deg, transparent, transparent 15px, rgba(255, 255, 255, 0.1) 15px, rgba(255, 255, 255, 0.1) 30px),
+            repeating-linear-gradient(-45deg, transparent, transparent 15px, rgba(0, 0, 0, 0.05) 15px, rgba(0, 0, 0, 0.05) 30px);
+    }
+    
+    .mystery-box-preview-ribbon-v {
+        @apply absolute left-1/2 top-0 bottom-0;
+        width: 32px;
+        transform: translateX(-50%);
+        background: linear-gradient(90deg, 
+            oklch(var(--christmas-red) / 0.8) 0%, 
+            oklch(var(--christmas-red)) 50%, 
+            oklch(var(--christmas-red) / 0.8) 100%);
+        box-shadow: 
+            inset -4px 0 8px rgba(0, 0, 0, 0.3),
+            inset 4px 0 8px rgba(255, 255, 255, 0.2);
+        z-index: 2;
+    }
+    
+    .mystery-box-preview-ribbon-h {
+        @apply absolute top-1/2 left-0 right-0;
+        height: 32px;
+        transform: translateY(-50%);
+        background: linear-gradient(180deg, 
+            oklch(var(--christmas-red) / 0.8) 0%, 
+            oklch(var(--christmas-red)) 50%, 
+            oklch(var(--christmas-red) / 0.8) 100%);
+        box-shadow: 
+            inset 0 -4px 8px rgba(0, 0, 0, 0.3),
+            inset 0 4px 8px rgba(255, 255, 255, 0.2);
+        z-index: 2;
+    }
+    
+    .mystery-box-preview-bow {
+        @apply absolute left-1/2 top-0;
+        transform: translate(-50%, -50%);
+        width: 80px;
+        height: 48px;
+        z-index: 3;
+    }
+    
+    .mystery-box-preview-bow-left,
+    .mystery-box-preview-bow-right {
+        @apply absolute top-0;
+        width: 40px;
+        height: 40px;
+        background: oklch(var(--christmas-red));
+        border-radius: 50% 50% 0 50%;
+        box-shadow: 
+            inset -4px -4px 8px rgba(0, 0, 0, 0.3),
+            inset 4px 4px 8px rgba(255, 255, 255, 0.2),
+            0 4px 8px rgba(0, 0, 0, 0.3);
+    }
+    
+    .mystery-box-preview-bow-left {
+        left: 0;
+        transform: rotate(-45deg);
+    }
+    
+    .mystery-box-preview-bow-right {
+        right: 0;
+        transform: rotate(45deg);
+    }
+    
+    .mystery-box-preview-bow-center {
+        @apply absolute left-1/2 top-1/2;
+        transform: translate(-50%, -50%);
+        width: 24px;
+        height: 24px;
+        background: oklch(var(--christmas-red));
+        border-radius: 50%;
+        box-shadow: 
+            inset -4px -4px 6px rgba(0, 0, 0, 0.4),
+            inset 4px 4px 6px rgba(255, 255, 255, 0.3),
+            0 4px 8px rgba(0, 0, 0, 0.3);
+    }
+    
+    /* Rarity-specific preview colors */
+    .mystery-box-preview-common .mystery-box-preview-body {
+        background: linear-gradient(135deg, 
+            oklch(var(--rarity-common) / 0.9) 0%, 
+            oklch(var(--rarity-common) / 0.7) 100%);
+        box-shadow: 
+            inset -8px -8px 16px rgba(0, 0, 0, 0.3),
+            inset 8px 8px 16px rgba(255, 255, 255, 0.3),
+            0 16px 32px oklch(var(--rarity-common) / 0.5);
+    }
+    
+    .mystery-box-preview-rare .mystery-box-preview-body {
+        background: linear-gradient(135deg, 
+            oklch(var(--rarity-rare) / 0.9) 0%, 
+            oklch(var(--rarity-rare) / 0.7) 100%);
+        box-shadow: 
+            inset -8px -8px 16px rgba(0, 0, 0, 0.3),
+            inset 8px 8px 16px rgba(255, 255, 255, 0.3),
+            0 16px 32px oklch(var(--rarity-rare) / 0.5);
+    }
+    
+    .mystery-box-preview-epic .mystery-box-preview-body {
+        background: linear-gradient(135deg, 
+            oklch(var(--rarity-epic) / 0.9) 0%, 
+            oklch(var(--rarity-epic) / 0.7) 100%);
+        box-shadow: 
+            inset -8px -8px 16px rgba(0, 0, 0, 0.3),
+            inset 8px 8px 16px rgba(255, 255, 255, 0.3),
+            0 16px 32px oklch(var(--rarity-epic) / 0.5);
+    }
+    
+    .mystery-box-preview-legendary .mystery-box-preview-body {
+        background: linear-gradient(135deg, 
+            oklch(var(--rarity-legendary) / 0.9) 0%, 
+            oklch(var(--rarity-legendary) / 0.7) 100%);
+        box-shadow: 
+            inset -8px -8px 16px rgba(0, 0, 0, 0.3),
+            inset 8px 8px 16px rgba(255, 255, 255, 0.3),
+            0 16px 40px oklch(var(--rarity-legendary) / 0.6),
+            0 0 80px oklch(var(--rarity-legendary) / 0.4);
+    }
+    
+    /* Modal badge styles */
+    .item-badge {
+        @apply px-4 py-1 rounded-full text-sm font-bold;
+        @apply border-2 shadow-lg;
+    }
+    
+    .item-badge-common {
+        @apply bg-[oklch(var(--rarity-common)/0.2)] border-[oklch(var(--rarity-common))];
+        color: oklch(var(--rarity-common));
+    }
+    
+    .item-badge-rare {
+        @apply bg-[oklch(var(--rarity-rare)/0.2)] border-[oklch(var(--rarity-rare))];
+        color: oklch(var(--rarity-rare));
+    }
+    
+    .item-badge-epic {
+        @apply bg-[oklch(var(--rarity-epic)/0.2)] border-[oklch(var(--rarity-epic))];
+        color: oklch(var(--rarity-epic));
+    }
+    
+    .item-badge-legendary {
+        @apply bg-[oklch(var(--rarity-legendary)/0.2)] border-[oklch(var(--rarity-legendary))];
+        color: oklch(var(--rarity-legendary));
+    }
+
+    /* Enhanced modal backgrounds with festive styling */
+    .modal-common {
+        @apply bg-gradient-to-br from-white/95 to-[oklch(var(--rarity-common)/0.1)];
+        border-color: oklch(var(--rarity-common));
+        box-shadow: 0 0 30px oklch(var(--rarity-common) / 0.4),
+                    0 0 60px oklch(var(--rarity-common) / 0.2);
+    }
+
+    .modal-rare {
+        @apply bg-gradient-to-br from-white/95 to-[oklch(var(--rarity-rare)/0.1)];
+        border-color: oklch(var(--rarity-rare));
+        box-shadow: 0 0 30px oklch(var(--rarity-rare) / 0.4),
+                    0 0 60px oklch(var(--rarity-rare) / 0.2);
+    }
+
+    .modal-epic {
+        @apply bg-gradient-to-br from-white/95 to-[oklch(var(--rarity-epic)/0.1)];
+        border-color: oklch(var(--rarity-epic));
+        box-shadow: 0 0 30px oklch(var(--rarity-epic) / 0.4),
+                    0 0 60px oklch(var(--rarity-epic) / 0.2);
+    }
+
+    .modal-legendary {
+        @apply bg-gradient-to-br from-white/95 to-[oklch(var(--rarity-legendary)/0.1)];
+        border-color: oklch(var(--rarity-legendary));
+        box-shadow: 0 0 40px oklch(var(--rarity-legendary) / 0.5),
+                    0 0 80px oklch(var(--rarity-legendary) / 0.3),
+                    0 0 120px oklch(var(--rarity-legendary) / 0.1);
+    }
+
+    /* Info card styles with rarity accents */
+    .info-card {
+        @apply rounded-lg p-3 border-2 transition-all duration-300;
+    }
+
+    .info-card-common {
+        @apply bg-[oklch(var(--rarity-common)/0.05)] border-[oklch(var(--rarity-common)/0.3)];
+    }
+
+    .info-card-rare {
+        @apply bg-[oklch(var(--rarity-rare)/0.05)] border-[oklch(var(--rarity-rare)/0.3)];
+    }
+
+    .info-card-epic {
+        @apply bg-[oklch(var(--rarity-epic)/0.05)] border-[oklch(var(--rarity-epic)/0.3)];
+    }
+
+    .info-card-legendary {
+        @apply bg-[oklch(var(--rarity-legendary)/0.05)] border-[oklch(var(--rarity-legendary)/0.3)];
+    }
+
+    /* Buy button styles with festive effects */
+    .buy-button {
+        @apply rounded-xl transition-all duration-300 transform hover:scale-105;
+        @apply shadow-lg hover:shadow-2xl;
+    }
+
+    .buy-button-common {
+        @apply bg-[oklch(var(--rarity-common))] hover:bg-[oklch(var(--rarity-common)/0.9)];
+        @apply text-white border-2 border-[oklch(var(--rarity-common)/0.5)];
+        box-shadow: 0 4px 20px oklch(var(--rarity-common) / 0.4);
+    }
+
+    .buy-button-common:hover {
+        box-shadow: 0 6px 30px oklch(var(--rarity-common) / 0.6);
+    }
+
+    .buy-button-rare {
+        @apply bg-[oklch(var(--rarity-rare))] hover:bg-[oklch(var(--rarity-rare)/0.9)];
+        @apply text-white border-2 border-[oklch(var(--rarity-rare)/0.5)];
+        box-shadow: 0 4px 20px oklch(var(--rarity-rare) / 0.4);
+    }
+
+    .buy-button-rare:hover {
+        box-shadow: 0 6px 30px oklch(var(--rarity-rare) / 0.6);
+    }
+
+    .buy-button-epic {
+        @apply bg-[oklch(var(--rarity-epic))] hover:bg-[oklch(var(--rarity-epic)/0.9)];
+        @apply text-white border-2 border-[oklch(var(--rarity-epic)/0.5)];
+        box-shadow: 0 4px 20px oklch(var(--rarity-epic) / 0.4);
+    }
+
+    .buy-button-epic:hover {
+        box-shadow: 0 6px 30px oklch(var(--rarity-epic) / 0.6);
+    }
+
+    .buy-button-legendary {
+        @apply bg-[oklch(var(--rarity-legendary))] hover:bg-[oklch(var(--rarity-legendary)/0.9)];
+        @apply text-white border-2 border-[oklch(var(--rarity-legendary)/0.5)];
+        box-shadow: 0 4px 20px oklch(var(--rarity-legendary) / 0.5),
+                    0 8px 40px oklch(var(--rarity-legendary) / 0.3);
+    }
+
+    .buy-button-legendary:hover {
+        box-shadow: 0 6px 30px oklch(var(--rarity-legendary) / 0.7),
+                    0 12px 60px oklch(var(--rarity-legendary) / 0.4);
+    }
+
+    /* Animation keyframes */
+    @keyframes confetti {
+        0% {
+            transform: scale(0) rotate(0deg);
+            opacity: 0;
+        }
+        50% {
+            transform: scale(1.2) rotate(180deg);
+            opacity: 1;
+        }
+        100% {
+            transform: scale(1) rotate(360deg);
+            opacity: 0;
+        }
+    }
+
+    @keyframes fade-in {
+        from {
+            opacity: 0;
+            transform: translateY(-10px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    @keyframes spin-slow {
+        from {
+            transform: rotate(0deg);
+        }
+        to {
+            transform: rotate(360deg);
+        }
+    }
+
+    .animate-confetti {
+        animation: confetti 2s ease-out forwards;
+    }
+
+    .animate-fade-in {
+        animation: fade-in 0.5s ease-out forwards;
+    }
+
+    .animate-spin-slow {
+        animation: spin-slow 20s linear infinite;
+    }
+
+    /* Shop animations */
+    @keyframes toast-in {
+        0% {
+            opacity: 0;
+            transform: translateX(-50%) translateY(-20px) scale(0.9);
+        }
+        100% {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0) scale(1);
+        }
+    }
+
+    @keyframes shop-card-in {
+        0% {
+            opacity: 0;
+            transform: translateY(30px) scale(0.95);
+        }
+        100% {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+    }
+
+    @keyframes card-fade-in {
+        0% {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        100% {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .animate-toast-in {
+        animation: toast-in 0.4s ease-out forwards;
+    }
+
+    .animate-shop-card-in {
+        animation: shop-card-in 0.6s ease-out forwards;
+    }
+
+    .animate-card-fade-in {
+        opacity: 0;
+        animation: card-fade-in 0.5s ease-out forwards;
+    }
+
+    /* ========== SIMPLIFIED UI COMPONENTS ========== */
+
+    /* Header bar */
+    .header-bar {
+        @apply flex items-center justify-between px-6 py-4;
+        background: linear-gradient(180deg, rgba(0,0,0,0.5) 0%, transparent 100%);
+    }
+
+    .header-title {
+        @apply text-2xl md:text-3xl font-bold text-white;
+        text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+    }
+
+    .header-coins {
+        @apply flex items-center gap-2 bg-black/40 backdrop-blur-sm rounded-full px-4 py-2;
+        @apply text-yellow-400 font-bold text-lg;
+    }
+
+    /* Conveyor styles */
+    .conveyor-container {
+        @apply w-full;
+    }
+
+    .conveyor-belt {
+        @apply relative w-full h-28 md:h-36 rounded-2xl overflow-hidden;
+        background: linear-gradient(180deg, rgba(40,40,60,0.8) 0%, rgba(20,20,40,0.9) 100%);
+        border: 3px solid rgba(255,255,255,0.15);
+        box-shadow: 
+            inset 0 2px 20px rgba(0,0,0,0.5),
+            0 10px 40px rgba(0,0,0,0.3);
+    }
+
+    .conveyor-frozen {
+        border-color: rgba(100,200,255,0.6);
+        box-shadow: 
+            inset 0 2px 20px rgba(0,0,0,0.5),
+            0 0 30px rgba(100,200,255,0.4);
+    }
+
+    .conveyor-track {
+        @apply absolute inset-x-0 top-1/2 -translate-y-1/2 h-3;
+        background: repeating-linear-gradient(
+            90deg,
+            rgba(255,255,255,0.1) 0px,
+            rgba(255,255,255,0.1) 30px,
+            transparent 30px,
+            transparent 60px
+        );
+        animation: track-move 2s linear infinite;
+    }
+
+    @keyframes track-move {
+        from { background-position-x: 0; }
+        to { background-position-x: 60px; }
+    }
+
+    .conveyor-freeze-overlay {
+        @apply absolute inset-0 bg-cyan-400/20 flex items-center justify-center z-20;
+        backdrop-filter: blur(2px);
+    }
+
+    .conveyor-hint {
+        @apply text-center text-white/60 text-sm mt-3;
+    }
+
+    /* Gift box styles */
+    .gift-box {
+        @apply absolute top-1/2 -translate-y-1/2 cursor-pointer z-10;
+        @apply transition-transform duration-150 ease-out;
+        width: 70px;
+        height: 70px;
+    }
+
+    .gift-box:hover {
+        transform: translateY(-50%) scale(1.15);
+    }
+
+    .gift-box:active {
+        transform: translateY(-50%) scale(0.95);
+    }
+
+    .gift-box-inner {
+        @apply w-full h-full rounded-xl flex items-center justify-center;
+        @apply border-2 shadow-lg;
+        transition: all 0.2s ease;
+    }
+
+    .gift-box-icon {
+        @apply text-4xl;
+        filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
+    }
+
+    /* Gift box rarity colors */
+    .gift-box-common .gift-box-inner {
+        background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
+        border-color: #4ade80;
+        box-shadow: 0 4px 20px rgba(34,197,94,0.4);
+    }
+
+    .gift-box-rare .gift-box-inner {
+        background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+        border-color: #60a5fa;
+        box-shadow: 0 4px 20px rgba(59,130,246,0.4);
+    }
+
+    .gift-box-epic .gift-box-inner {
+        background: linear-gradient(135deg, #a855f7 0%, #9333ea 100%);
+        border-color: #c084fc;
+        box-shadow: 0 4px 20px rgba(168,85,247,0.5);
+    }
+
+    .gift-box-legendary .gift-box-inner {
+        background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
+        border-color: #fcd34d;
+        box-shadow: 0 4px 25px rgba(251,191,36,0.6), 0 0 40px rgba(251,191,36,0.3);
+        animation: legendary-glow 2s ease-in-out infinite;
+    }
+
+    @keyframes legendary-glow {
+        0%, 100% { box-shadow: 0 4px 25px rgba(251,191,36,0.6), 0 0 40px rgba(251,191,36,0.3); }
+        50% { box-shadow: 0 4px 30px rgba(251,191,36,0.8), 0 0 60px rgba(251,191,36,0.5); }
+    }
+
+    /* Status pills */
+    .status-pill {
+        @apply flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold;
+        @apply backdrop-blur-sm border;
+    }
+
+    .status-pill-active {
+        @apply bg-green-600/80 border-green-400 text-white;
+    }
+
+    .status-pill-boost {
+        @apply bg-purple-600/80 border-purple-400 text-white;
+    }
+
+    /* Power-up bar */
+    .powerup-bar {
+        @apply flex items-center justify-center gap-2 mt-4;
+    }
+
+    .powerup-btn {
+        @apply flex items-center gap-1.5 px-3 py-2 rounded-lg;
+        @apply bg-amber-600/80 hover:bg-amber-500 border border-amber-400;
+        @apply text-white text-sm font-bold transition-all;
+    }
+
+    .powerup-btn:active {
+        transform: scale(0.95);
+    }
+
+    /* Action buttons */
+    .action-buttons {
+        @apply flex items-center justify-center gap-3 mt-6;
+    }
+
+    .action-btn {
+        @apply flex items-center gap-2 px-5 py-3 rounded-xl font-bold;
+        @apply border-2 shadow-lg transition-all duration-200;
+    }
+
+    .action-btn:hover {
+        transform: translateY(-2px);
+    }
+
+    .action-btn:active {
+        transform: translateY(0) scale(0.98);
+    }
+
+    .action-btn-shop {
+        @apply bg-gradient-to-b from-amber-600 to-amber-800 border-amber-400 text-amber-100;
+    }
+
+    .action-btn-social {
+        @apply bg-gradient-to-b from-fuchsia-600 to-fuchsia-800 border-fuchsia-400 text-fuchsia-100;
+    }
+
+    .action-btn-profile {
+        @apply bg-gradient-to-b from-indigo-600 to-indigo-800 border-indigo-400 text-indigo-100;
+        position: relative;
+    }
+
+    .action-btn-badge {
+        @apply absolute -top-2 -right-2 w-6 h-6 rounded-full;
+        @apply bg-green-500 border-2 border-green-300 text-white text-xs font-bold;
+        @apply flex items-center justify-center;
+    }
+
+    /* Help button */
+    .help-btn {
+        @apply fixed bottom-4 right-4 z-40 w-10 h-10 rounded-full;
+        @apply bg-white/20 backdrop-blur-sm border border-white/30;
+        @apply text-white font-bold text-lg;
+        @apply flex items-center justify-center;
+        @apply transition-all duration-200 hover:bg-white/30 hover:scale-110;
+    }
+
+    /* Start screen button */
+    .start-btn {
+        @apply inline-flex items-center gap-3 px-8 py-4 rounded-2xl;
+        @apply text-xl font-bold text-white;
+        @apply transition-all duration-300;
+        background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
+        border: 3px solid #4ade80;
+        box-shadow: 0 8px 30px rgba(34, 197, 94, 0.4), 0 0 60px rgba(34, 197, 94, 0.2);
+    }
+
+    .start-btn:hover {
+        transform: translateY(-3px) scale(1.02);
+        box-shadow: 0 12px 40px rgba(34, 197, 94, 0.5), 0 0 80px rgba(34, 197, 94, 0.3);
+    }
+
+    .start-btn:active {
+        transform: translateY(0) scale(0.98);
+    }
+
+    /* Connect wallet button */
+    .connect-wallet-btn {
+        @apply inline-flex items-center gap-3 px-8 py-4 rounded-2xl;
+        @apply text-xl font-bold text-white;
+        @apply transition-all duration-300;
+        background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
+        border: 3px solid #818cf8;
+        box-shadow: 0 8px 30px rgba(99, 102, 241, 0.4), 0 0 60px rgba(99, 102, 241, 0.2);
+    }
+
+    .connect-wallet-btn:hover:not(:disabled) {
+        transform: translateY(-3px) scale(1.02);
+        box-shadow: 0 12px 40px rgba(99, 102, 241, 0.5), 0 0 80px rgba(99, 102, 241, 0.3);
+    }
+
+    .connect-wallet-btn:active:not(:disabled) {
+        transform: translateY(0) scale(0.98);
+    }
+
+    .connect-wallet-btn:disabled {
+        opacity: 0.7;
+        cursor: wait;
+    }
+
+    /* Header wallet display */
+    .header-wallet {
+        @apply flex items-center gap-2 bg-black/40 backdrop-blur-sm rounded-full pl-4 pr-2 py-2;
+    }
+
+    .header-balance {
+        @apply text-green-400 font-bold text-lg;
+    }
+
+    .header-disconnect {
+        @apply w-8 h-8 rounded-full bg-red-500/20 text-red-400 font-bold;
+        @apply flex items-center justify-center transition-all;
+        @apply hover:bg-red-500/40 hover:text-red-300;
+    }
+
+    /* Gift box cost label */
+    .gift-box-cost {
+        @apply absolute -bottom-5 left-1/2 -translate-x-1/2;
+        @apply bg-black/70 text-white text-xs font-bold px-2 py-0.5 rounded-full;
+        @apply whitespace-nowrap;
+    }
+
+    /* Unaffordable gift box */
+    .gift-box-unaffordable {
+        opacity: 0.5;
+        filter: grayscale(0.5);
+        cursor: not-allowed;
+    }
+
+    .gift-box-unaffordable:hover {
+        transform: translateY(-50%) scale(1) !important;
+    }
+}

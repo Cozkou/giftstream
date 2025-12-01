@@ -205,6 +205,13 @@ export function ConveyorBelt() {
 
       {/* Conveyor container */}
       <div className="conveyor-container">
+        {/* Elf placing boxes */}
+        <img 
+          src="/elf.png" 
+          alt="Elf" 
+          className="conveyor-elf"
+        />
+        
         <div 
           ref={conveyorRef}
           className={`conveyor-belt ${isFrozen ? 'conveyor-frozen' : ''}`}

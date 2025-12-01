@@ -4,6 +4,7 @@ import { Shop } from './components/Shop';
 import { Profile } from './components/Profile';
 import { HelpModal } from './components/HelpModal';
 import { Social } from './components/Social';
+import { Tutorial, useTutorial } from './components/Tutorial';
 import { useGame } from './context/GameContext';
 import { useWallet, TOKEN_SYMBOL } from './context/WalletContext';
 
@@ -97,9 +98,15 @@ function App() {
   const [isSocialOpen, setIsSocialOpen] = useState(false);
   const { collectedItems } = useGame();
   const { balance, formatBalance, disconnect, isConnected } = useWallet();
+  const { showTutorial, isLoaded, completeTutorial } = useTutorial();
 
   if (!hasStarted || !isConnected) {
-    return <StartScreen onStart={() => setHasStarted(true)} />;
+    return (
+      <>
+        <StartScreen onStart={() => setHasStarted(true)} />
+        {isLoaded && showTutorial && <Tutorial onComplete={completeTutorial} />}
+      </>
+    );
   }
 
   return (

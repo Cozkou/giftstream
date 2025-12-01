@@ -1,147 +1,138 @@
-# GiftStream - Conveyor Belt Idle Game
+# GiftStream 🎁
 
-A Christmas-themed conveyor belt idle game built on the Internet Computer (IC) with a Motoko backend and React/TypeScript frontend.
+A crypto-themed mystery box unboxing game with social features. Pay GIFT tokens to unbox mystery gifts and discover random crypto rewards!
 
-## Prerequisites
+## Quick Start (Frontend Only)
 
-Before running this app, you need to install:
-
-1. **DFX (Internet Computer SDK)**
-   ```bash
-   sh -ci "$(curl -fsSL https://sdk.dfinity.org/install.sh)"
-   ```
-   Or follow the [official installation guide](https://internetcomputer.org/docs/current/developer-docs/setup/install/).
-
-2. **Node.js and npm** (already installed ✓)
-   - Node.js v18 or higher
-   - npm v9 or higher
-
-## Setup Instructions
-
-### 1. Install DFX (if not already installed)
+The easiest way to run GiftStream:
 
 ```bash
-sh -ci "$(curl -fsSL https://sdk.dfinity.org/install.sh)"
-dfx --version  # Verify installation
-```
-
-### 2. Install Frontend Dependencies
-
-```bash
+# 1. Navigate to frontend
 cd frontend
+
+# 2. Install dependencies
 npm install
-cd ..
-```
 
-### 3. Start the Local Internet Computer Network
-
-In one terminal, start the local IC network:
-
-```bash
-dfx start --background
-```
-
-### 4. Deploy the Backend Canister
-
-In another terminal, deploy the Motoko backend:
-
-```bash
-dfx deploy backend
-```
-
-This will:
-- Compile the Motoko code
-- Create the canister
-- Generate TypeScript declarations in `declarations/backend/`
-
-### 5. Start the Frontend Development Server
-
-```bash
-cd frontend
+# 3. Start the development server
 npm run dev
 ```
 
-The app will be available at `http://localhost:3000`
+**That's it!** Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-## Running the App
+## How to Play
 
-### Option 1: Full IC Setup (Recommended)
+1. **Connect Wallet** - Click "Connect Wallet" on the start screen (demo gives you 100 GIFT tokens)
+2. **Start Game** - Click "Start Playing" to see the conveyor belt
+3. **Pick a Gift** - Click any gift box you can afford (cost shown below each box)
+4. **Confirm & Unbox** - Confirm the transaction and watch the unboxing animation
+5. **Win or Lose** - Receive a random crypto reward (can be more or less than you paid!)
 
-1. **Terminal 1** - Start IC network:
-   ```bash
-   dfx start --background
-   ```
+## Features
 
-2. **Terminal 2** - Deploy backend:
-   ```bash
-   dfx deploy backend
-   ```
+### 🎁 Crypto Unboxing
+- **Random costs** per gift based on rarity
+- **Random rewards** with multipliers (0.5x - 10x)
+- **4 rarity tiers**: Common, Rare, Epic, Legendary
 
-3. **Terminal 3** - Run frontend:
-   ```bash
-   cd frontend
-   npm run dev
-   ```
+### 👥 Social System
+- **Friends** - Add friends and see their profits
+- **Guilds** - Create or join guilds (up to 50 members)
+- **Leaderboards** - Track profits by day/week/month/year
 
-### Option 2: Frontend Only (Development)
+### 🛒 Power-Up Shop
+- **Slow-Mo** - Slows down the conveyor
+- **Rarity Boost** - Double rare item chances
+- **Freeze** - Stops the conveyor temporarily
 
-If you just want to see the UI without the backend:
+### 📊 History & Stats
+- View all unboxed items
+- Track total winnings
+- See active power-ups
 
-```bash
-cd frontend
-npm run dev
-```
+## Tech Stack
 
-The frontend will run in mock mode (backend calls will be stubbed).
-
-## Building for Production
-
-```bash
-# Build the frontend
-cd frontend
-npm run build
-
-# Deploy everything to IC
-dfx deploy
-```
+- **Frontend**: React, TypeScript, Vite, Tailwind CSS
+- **State**: React Context (Game, Wallet, Social)
+- **Storage**: localStorage for persistence
+- **Backend**: Motoko (Internet Computer) - optional
 
 ## Project Structure
 
 ```
 giftstream/
-├── backend/
-│   └── main.mo              # Motoko backend canister
 ├── frontend/
 │   ├── src/
-│   │   ├── components/      # React components
-│   │   ├── hooks/          # Custom React hooks
-│   │   ├── App.tsx         # Main app component
-│   │   └── main.tsx        # Entry point
-│   ├── index.html
+│   │   ├── components/       # UI Components
+│   │   │   ├── ConveyorBelt.tsx
+│   │   │   ├── GiftBox.tsx
+│   │   │   ├── Shop.tsx
+│   │   │   ├── Social.tsx
+│   │   │   ├── Profile.tsx
+│   │   │   └── ...
+│   │   ├── context/          # State Management
+│   │   │   ├── GameContext.tsx
+│   │   │   ├── WalletContext.tsx
+│   │   │   └── SocialContext.tsx
+│   │   ├── App.tsx
+│   │   └── main.tsx
+│   ├── public/
+│   │   └── background.jpeg   # Background image
 │   └── package.json
-├── dfx.json                 # IC project configuration
-└── spec.md                  # Project specification
+├── backend/
+│   └── main.mo               # Motoko backend (optional)
+└── dfx.json
+```
+
+## Advanced: Running with Internet Computer Backend
+
+If you want to use the Motoko backend:
+
+### Prerequisites
+- [DFX SDK](https://internetcomputer.org/docs/current/developer-docs/setup/install/)
+- Node.js v18+
+
+### Steps
+
+```bash
+# 1. Install DFX
+sh -ci "$(curl -fsSL https://sdk.dfinity.org/install.sh)"
+
+# 2. Start local IC network
+dfx start --background
+
+# 3. Deploy backend
+dfx deploy backend
+
+# 4. Run frontend
+cd frontend && npm run dev
 ```
 
 ## Troubleshooting
 
-### DFX not found
-- Make sure DFX is installed and in your PATH
-- Try: `export PATH="$HOME/bin:$PATH"` or restart your terminal
+### App not loading?
+- Make sure you're in the `frontend` directory
+- Run `npm install` if dependencies are missing
+- Check that port 3000 is available
 
-### Port already in use
-- Change the port in `vite.config.ts` or stop the process using the port
+### Wallet not connecting?
+- This is a demo wallet - just click Connect
+- Clear localStorage if state gets corrupted: `localStorage.clear()`
 
-### Backend not connecting
-- Make sure `dfx start` is running
-- Verify backend is deployed: `dfx canister status backend`
-- Check declarations are generated: `ls declarations/backend/`
+### Want to reset progress?
+```javascript
+// In browser console:
+localStorage.clear()
+location.reload()
+```
 
-## Features
+## Future Roadmap
 
-- 🎄 Christmas-themed conveyor belt idle game
-- 🎁 Mystery boxes with 4 rarity tiers (common, rare, epic, legendary)
-- 🖱️ Click items to view details and purchase
-- 💾 Backend storage for purchased items
-- 🎨 Beautiful animations and festive UI
+- 🔗 Real blockchain integration (Solana/ICP)
+- 💰 Real crypto payments
+- 🏆 Global leaderboards
+- 👥 Live multiplayer competitions
+- 🎨 NFT rewards
 
+---
+
+Built with ❄️ for the holidays
